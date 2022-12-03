@@ -22,13 +22,10 @@ enum move {
 const inputToMove = (input: string) => {
   switch (input) {
     case "A":
-    case "X":
       return move.Rock;
     case "B":
-    case "Y":
       return move.Paper;
     case "C":
-    case "Z":
       return move.Scissors;
     default:
       throw new Error(`Unknown move: ${input}`);
