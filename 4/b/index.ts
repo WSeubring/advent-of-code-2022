@@ -18,10 +18,20 @@ const parseRangeStringToRange = (range: string): Range => {
     end: parseInt(rangeParts[1]),
   };
 };
+
+/**
+ *  Counts the distance of overlapping sections, this can as be a negative which indicated the distance between overlap
+ */
 const getDistanceOverlapping = (rangeA: Range, rangeB: Range) => {
   return (
     Math.min(rangeA.end, rangeB.end) - Math.max(rangeA.start, rangeB.start) + 1
   );
+};
+
+const isOverlapping = (rangeA: Range, rangeB: Range) => {
+  const distanceOverlapping = getDistanceOverlapping(rangeA, rangeB);
+  // If there is a positive distance, then the sections overlap
+  return distanceOverlapping > 0;
 };
 
 const result = () => {
@@ -35,11 +45,7 @@ const result = () => {
     const elfARange = parseRangeStringToRange(ranges[0]);
     const elfBRange = parseRangeStringToRange(ranges[1]);
 
-    // Counts the distance of overlapping sections, this can as be a negative which indicated the distance between overlap
-    const distanceOverlapping = getDistanceOverlapping(elfARange, elfBRange);
-
-    // If there is a positive distance, then the sections overlap
-    return distanceOverlapping > 0 ? acc + 1 : acc;
+    return isOverlapping(elfARange, elfBRange) ? acc + 1 : acc;
   }, 0);
 
   return nContainedRanges;
