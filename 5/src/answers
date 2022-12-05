@@ -1,0 +1,24 @@
+Stack 0: ['W']
+Stack 1: ['S']
+Stack 2: ['H', 'V', 'R', 'D', 'J', 'F']
+Stack 3: ['S', 'T']
+Stack 4: ['F', 'W', 'M']
+Stack 5: ['C', 'V', 'V', 'S', 'L', 'L', 'M', 'L', 'M', 'R']
+Stack 6: ['F', 'G', 'G', 'J', 'P', 'F', 'B', 'H', 'B', 'Q', 'B', 'L', 'Z', 'C', 'P', 'G', 'F', 'J', 'F', 'H']
+Stack 7: ['C', 'F', 'M', 'H', 'T', 'Q', 'Z', 'Q', 'C', 'P']
+Stack 8: ['Z', 'W', 'P']
+
+A -> WSFTMRHPP
+
+--------------------------------------
+Stack 0: ['G']
+Stack 1: ['S']
+Stack 2: ['Q', 'M', 'L', 'J', 'S', 'L']
+Stack 3: ['F', 'C']
+Stack 4: ['Z', 'T', 'M']
+Stack 5: ['J', 'Q', 'J', 'T', 'Z', 'M', 'H', 'F', 'M', 'F']
+Stack 6: ['P', 'C', 'Q', 'P', 'P', 'L', 'B', 'W', 'C', 'H', 'L', 'Z', 'F', 'W', 'V', 'D', 'W', 'V', 'G', 'B']
+Stack 7: ['G', 'R', 'V', 'H', 'H', 'B', 'F', 'F', 'S', 'R']
+Stack 8: ['F', 'C', 'P']
+
+B -> GSLCMFBRP
