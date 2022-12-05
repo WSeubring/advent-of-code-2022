@@ -46,16 +46,7 @@ fn main() {
                     let start_offset = 1;
                     let gap_size = 3;
 
-                    for i in 0..line.len() {
-                        if i % (gap_size + 1) == start_offset {
-                            let col = i / (gap_size + 1);
-                            let crate_name = line.chars().nth(i).unwrap();
-
-                            if crate_name.is_ascii_alphabetic() {
-                                stacks[col].push(crate_name)
-                            }
-                        }
-                    }
+                    append_line_crates_to_stacks(&line, start_offset, gap_size, &mut stacks);
                 } else {
                     // Apply the command provided in the line
                     let parts = line.split(" ").collect::<Vec<&str>>();
@@ -69,10 +60,7 @@ fn main() {
                     println!("Command: {}", movement_command);
 
                     // Apply command to the stacks
-                    for _ in 0..movement_command.amount {
-                        let crate_name = stacks[movement_command.from].pop().unwrap();
-                        stacks[movement_command.to].push(crate_name);
-                    }
+                    perform_movement_command(movement_command, &mut stacks)
                 }
                 //Print the stacks
                 for i in 0..n_stacks {
@@ -83,6 +71,32 @@ fn main() {
                 println!("#######################################################################");
             }
         }
+    }
+}
+
+fn append_line_crates_to_stacks(
+    line: &str,
+    start_offset: usize,
+    gap_size: usize,
+    stacks: &mut Vec<Vec<char>>,
+) {
+    for i in 0..line.len() {
+        if i % (gap_size + 1) == start_offset {
+            let col = i / (gap_size + 1);
+            let crate_name = line.chars().nth(i).unwrap();
+
+            if crate_name.is_ascii_alphabetic() {
+                stacks[col].push(crate_name)
+            }
+        }
+    }
+}
+
+fn perform_movement_command(movement_command: MovementCommand, stacks: &mut Vec<Vec<char>>) {
+    // Apply command to the stacks
+    for _ in 0..movement_command.amount {
+        let crate_name = stacks[movement_command.from].pop().unwrap();
+        stacks[movement_command.to].push(crate_name);
     }
 }
 
