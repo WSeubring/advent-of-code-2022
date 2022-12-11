@@ -1,6 +1,8 @@
 import * as fs from "fs";
 import _ from "lodash";
+import lcm from "lcm";
 
+let leastCommonMultiplier = 0;
 class MonkeyManager {
   private monkeys: Monkey[];
 
@@ -40,7 +42,7 @@ Monkey 0:
 class Monkey {
   public items: bigint[];
   private operation: (val: bigint) => bigint;
-  private testValue: number;
+  public testValue: number;
   private targets: number[];
   private inspectCount = 0;
   private monkeyManager: MonkeyManager;
@@ -77,9 +79,11 @@ class Monkey {
     }
     this.inspectCount += 1;
     const inspectedItemWorryLevel = this.operation(itemWorryLevel);
-    const isDividable = this.test(inspectedItemWorryLevel);
+    const reducesWorryLevel =
+      inspectedItemWorryLevel % BigInt(leastCommonMultiplier);
+    const isDividable = this.test(reducesWorryLevel);
     const targetMonkey = this.getTargetMonkey(isDividable);
-    targetMonkey.receiveItem(inspectedItemWorryLevel);
+    targetMonkey.receiveItem(reducesWorryLevel);
   }
 
   public getInspectCount() {
@@ -132,7 +136,11 @@ const playMonkeyRounds = () => {
     }
   });
 
-  const nRounds = 1000;
+  leastCommonMultiplier = monkeyManager.getMonkeys().reduce((acc, monkey) => {
+    return lcm(acc, monkey.testValue);
+  }, monkeyManager.getMonkeys()[0].testValue);
+
+  const nRounds = 10000;
   for (let i = 0; i < nRounds; i++) {
     console.log("Round", i);
     monkeyManager.getMonkeys().forEach((monkey, i) => {
@@ -141,7 +149,6 @@ const playMonkeyRounds = () => {
   }
 
   console.log("Final state");
-  // monkeyManager.print();
 
   const counts = monkeyManager
     .getMonkeys()
@@ -171,13 +178,13 @@ const parseOperation = (line: string) => {
 
     switch (operationType) {
       case "+":
-        return BigInt(val) + BigInt(worryLevelChange);
+        return val + BigInt(worryLevelChange);
       case "-":
-        return BigInt(val) - BigInt(worryLevelChange);
+        return val - BigInt(worryLevelChange);
       case "*":
-        return BigInt(val) * BigInt(worryLevelChange);
+        return val * BigInt(worryLevelChange);
       case "/":
-        return BigInt(val) / BigInt(worryLevelChange);
+        return val / BigInt(worryLevelChange);
       default:
         throw new Error("Invalid operation");
     }
